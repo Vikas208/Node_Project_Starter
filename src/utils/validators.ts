@@ -1,4 +1,4 @@
-import { plainToClass } from 'class-transformer';
+import { plainToClass, plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { NextFunction, Response, Request } from 'express';
 
@@ -11,7 +11,7 @@ export const Validators = (
 	stopAtFirstError = false,
 ) => {
 	return function (req: Request, res: Response, next: NextFunction) {
-		const body = plainToClass(dto, req.body);
+		const body = plainToInstance(dto, req.body);
 		validate(body, {
 			skipMissingProperties,
 			whitelist,

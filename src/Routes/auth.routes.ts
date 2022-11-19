@@ -6,13 +6,11 @@ import {Router} from 'express';
 class Auth implements IRoutes {
 	public path: string;
 	public route: Router;
-	private controller: AuthController;
+	private static controller = new AuthController();
 	constructor() {
 		this.path = '/';
-		this.controller = new AuthController();
 		this.route = Router();
 		this.initializeRoutes();
-		console.log('Auth Routes',this);
 	}
 	initializeRoutes() {
 		this.route.get(`${this.path}`,(req,res)=>{
@@ -21,7 +19,7 @@ class Auth implements IRoutes {
 		this.route.post(
 			`${this.path}login`,
 			Validators(CreateLoginDto),
-			this.controller.login,
+			Auth.controller.login,
 		);
 	}
 }

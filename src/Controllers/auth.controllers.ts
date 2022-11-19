@@ -3,16 +3,14 @@ import { CreateLoginDto } from '@src/Dtos/CreateLogin.dto';
 import AuthService from '@src/Services/auth.service';
 
 class AuthController {
-	private service: AuthService;
+	private static service = new AuthService();
 	constructor() {
-		this.service = new AuthService();
-		console.log('Controller', this)
 	}
 	public login(req: Request, res: Response, next: NextFunction) {
 		try {
 			const body: CreateLoginDto = req.body;
-			console.log({service:this})
-			this.service.login(body);
+			let message = AuthController.service.login(body);
+			res.status(200).json(message);
 		} catch (err) {
 			next(err);
 		}
